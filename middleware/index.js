@@ -1,6 +1,6 @@
 const { body, validationResult, matchedData } = require("express-validator")
 const {hashPassword} = require("../auth/password.js")
-const prisma = require('../app.js')
+const prisma = require('../db/prisma.js')
 
 
 const validateSignUp = [
@@ -8,22 +8,22 @@ const validateSignUp = [
     .matches(/^[A-Za-z]+$/)
     .isLength({max:20, min:2})
     .toLowerCase()
-    .withMessage('must be between 2 and 20 characters and alphabetical')
+    .withMessage('First name must be between 2 and 20 characters and alphabetical')
     ,
     body('lastname').trim()
     .matches(/^[A-Za-z]+$/)
     .isLength({max:20, min:2})
     .toLowerCase()
-    .withMessage('must be between 2 and 20 characters and alphabetical')
+    .withMessage('Last name must be between 2 and 20 characters and alphabetical')
     ,
     body('username').trim()
     .isLength({max:20, min:2})
     .toLowerCase()
-    .withMessage('must be between 2 and 20 characters')
+    .withMessage('Username must be between 2 and 20 characters')
     ,
     body('password').trim()
     .isLength({min:8})
-    .withMessage('must be atleast 8 characters long')
+    .withMessage(' Password must be at least 8 characters long')
 ]
 
 
@@ -33,7 +33,7 @@ exports.homePageGet = (req,res) => {
 }
 
 exports.signUpGet = (req,res) => {
-    res.render("sign-up-form")
+    res.render("sign-up-form", {errors: []})
 }
 
 exports.signUpPost = [
@@ -41,15 +41,29 @@ exports.signUpPost = [
     async (req,res) => {
         const errors = validationResult(req)
         if(!errors.isEmpty()){
-            console.log(errors)
-            return res.render("sign-up-form", {errors:errors})
+            console.log(errors.errors)
+            return res.render("sign-up-form", {errors:errors.errors})
         }
         else{
             const {firstname, lastname, username, password} = matchedData(req)
-            const fullname = firstname +'_' + lastname
+            const fullname = firstname + '_' + lastname
             const hashedPassword = await hashPassword(password)
+            try{
+                const user = await prisma.user.create({
+                    data: {
+                        username: username,
+                        fullname: fullname
+                    }
+                })
+                res.redirect("/")
+                return user
+                
 
-            res.redirect("/")
+            } catch(error){
+                console.log('error inserting user')
+                console.log(error)
+            }
+            
         }
     }
 ]

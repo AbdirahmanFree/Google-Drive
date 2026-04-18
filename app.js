@@ -1,18 +1,15 @@
 const express = require("express")
 const path = require("node:path")
-const expressSession = require("express-session")
-const { PrismaPg } = require("@prisma/adapter-pg")
-const { PrismaClient } = require("./generated/prisma/client")
+const prisma = require('./db/prisma.js')
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store")
+const expressSession = require("express-session")
 const passport = require('passport')
 const routes = require('./routes')
 require('dotenv').config()
 
 const app = express()
 
-const connectionString = `${process.env.DATABASE_URL}`;
-const adapter = new PrismaPg({connectionString: connectionString});
-const prisma = new PrismaClient({adapter: adapter});
+
 
 app.set('views',path.join(__dirname,'views'))
 app.set('view engine', 'ejs')
@@ -46,4 +43,3 @@ app.listen(PORT,() => {
 })
 
 
-module.exports= prisma
