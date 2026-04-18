@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/AbdirahmanFree/Google-Drive#readme",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.7.0",
+    "@prisma/client": "^7.7.0",
+    "@quixo3/prisma-session-store": "^3.1.19",
     "bcrypt": "^6.0.0",
     "connect-pg-simple": "^10.0.0",
     "dotenv": "^17.4.2",
@@ -27,6 +30,7 @@
     "express-validator": "^7.3.2",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "pg": "^8.20.0"
+    "pg": "^8.20.0",
+    "prisma": "^7.7.0"
   }
 }
