@@ -19,5 +19,14 @@ model Session {
   expiresAt DateTime
 
   @@index([expiresAt])
+  @@map("sessions")
 
+}
+
+model User {
+  id          String  @id @default(uuid())
+  username    String @unique
+  fullname    String
+
+  @@map("user")
 }
