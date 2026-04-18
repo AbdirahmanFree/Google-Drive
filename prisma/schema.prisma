@@ -28,5 +28,5 @@ model User {
   username    String @unique
   fullname    String
 
-  @@map("user")
+  @@map("users")
 }
