@@ -1,22 +1,25 @@
-const express = require("express")
-const path = require("node:path")
-const prisma = require('./db/prisma.js')
-const { PrismaSessionStore } = require("@quixo3/prisma-session-store")
-const expressSession = require("express-session")
-const passport = require('passport')
-const routes = require('./routes')
-require('dotenv').config()
+import express, { urlencoded } from "express"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+import prisma from './db/prisma.js'
+import { PrismaSessionStore } from "@quixo3/prisma-session-store"
+import expressSession from "express-session"
+import passport from 'passport'
+import router from './routes/index.js'
+import dotenv from "dotenv";
+dotenv.config()
 
 const app = express()
 
-await prisma.user.findMany().then(response => {
-    console.log("hello")
-    console.log(response)
-})
+const users = await prisma.user.findMany();
+console.log(users)
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 app.set('views',path.join(__dirname,'views'))
 app.set('view engine', 'ejs')
-app.use(express.urlencoded({extended: true}))
+app.use(urlencoded({extended: true}))
 
 app.use(
     expressSession({
@@ -38,7 +41,7 @@ app.use(
 )
 
 
-app.use(routes)
+app.use(router)
 
 const PORT = process.env.PORT;
 app.listen(PORT,() => {

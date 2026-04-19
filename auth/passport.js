@@ -1,9 +1,9 @@
-const passport = require("passport")
-const LocalStrategy = require("passport-local").Strategy
-const { comparePasswords } = require("./password.js")
-const prisma = require("../db/prisma.js")
+import passport from "passport"
+import { Strategy as LocalStrategy } from "passport-local"
+import { comparePasswords } from "./password.js"
+import prisma from "../db/prisma.js"
 
-await prisma.user.findMany().then(response => {
+await user.findMany().then(response => {
     console.log(response)
 })
 

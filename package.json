@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "File uploader that has the functionality of google drive",
   "main": "app.js",
+  "type":"module" ,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

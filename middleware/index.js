@@ -1,6 +1,6 @@
-const { body, validationResult, matchedData } = require("express-validator")
-const {hashPassword} = require("../auth/password.js")
-const prisma = require('../db/prisma.js')
+import { body, validationResult, matchedData } from "express-validator"
+import { hashPassword } from  "../auth/password.js"
+import prisma from '../db/prisma.js'
 
 
 const validateSignUp = [
@@ -28,15 +28,15 @@ const validateSignUp = [
 
 
 
-exports.homePageGet = (req,res) => {
+const homePageGet = (req,res) => {
     res.render("index")
 }
 
-exports.signUpGet = (req,res) => {
+const signUpGet = (req,res) => {
     res.render("sign-up-form", {errors: []})
 }
 
-exports.signUpPost = [
+const signUpPost = [
     validateSignUp,
     async (req,res) => {
         const errors = validationResult(req)
@@ -68,6 +68,13 @@ exports.signUpPost = [
     }
 ]
 
-exports.logInGet = (req,res) => {
+const logInGet = (req,res) => {
     res.render("log-in-form")
+}
+
+export default {
+    logInGet,
+    signUpPost,
+    signUpGet,
+    homePageGet
 }
