@@ -67,3 +67,7 @@ exports.signUpPost = [
         }
     }
 ]
+
+exports.logInGet = (req,res) => {
+    res.render("log-in-form")
+}

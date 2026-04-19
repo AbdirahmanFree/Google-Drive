@@ -7,4 +7,6 @@ router.get("/",indexController.homePageGet)
 router.get("/sign-up",indexController.signUpGet)
 router.post("/sign-up",indexController.signUpPost)
 
+router.get("/log-in",indexController.logInGet)
+
 module.exports = router

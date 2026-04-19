@@ -9,7 +9,10 @@ require('dotenv').config()
 
 const app = express()
 
-
+await prisma.user.findMany().then(response => {
+    console.log("hello")
+    console.log(response)
+})
 
 app.set('views',path.join(__dirname,'views'))
 app.set('view engine', 'ejs')
