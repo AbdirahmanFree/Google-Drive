@@ -16,4 +16,6 @@ router.post("/log-in",passport.authenticate('local', {
     failureRedirect: "/log-in"
 }))
 
+router.post("/log-out",indexController.logOutPost)
+
 export default router

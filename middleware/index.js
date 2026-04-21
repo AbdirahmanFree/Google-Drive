@@ -29,7 +29,7 @@ const validateSignUp = [
 
 
 const homePageGet = (req,res) => {
-    res.render("index")
+    res.render("index", {user: req.user})
 }
 
 const signUpGet = (req,res) => {
@@ -73,9 +73,21 @@ const logInGet = (req,res) => {
     res.render("log-in-form")
 }
 
+const logOutPost = (req,res) => {
+    req.logOut((err) => {
+        if(err){return next(err)}
+        req.session.destroy((error) => {
+            if(error){return next(error)}
+            res.clearCookie('connect.sid')
+            res.redirect("/")
+        })
+    })
+}
+
 export default {
     logInGet,
     signUpPost,
     signUpGet,
-    homePageGet
+    homePageGet,
+    logOutPost
 }

@@ -6,8 +6,16 @@
     <title>Home</title>
 </head>
 <body>
-    <h1> hello everybody</h1>
-    <a href="/sign-up">Sign-Up</a>
-    <a href="/log-in">Sign-Up</a>
+    <% if(user){ %>
+        <h1>Hello <%=user.fullname.split("_")[0]%> <%=user.fullname.split("_")[1]%> </h1>
+        <form method="post" action="/log-out">
+            <button type="submit">Log-Out</button>
+        </form>
+    <%} else { %>
+        <h1> hello everybody</h1>
+        <a href="/sign-up">Sign-Up</a>
+        <a href="/log-in">Log-In</a>
+    <%} %>
+    
 </body>
 </html>
