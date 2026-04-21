@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url"
 import prisma from './db/prisma.js'
 import { PrismaSessionStore } from "@quixo3/prisma-session-store"
 import expressSession from "express-session"
-import passport from 'passport'
+import passport from './auth/passport.js'
 import router from './routes/index.js'
 import dotenv from "dotenv";
 dotenv.config()
@@ -36,6 +36,9 @@ app.use(
         )
     })
 )
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 app.use(router)
