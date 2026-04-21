@@ -84,10 +84,24 @@ const logOutPost = (req,res) => {
     })
 }
 
+const isAuthenticated = (req,res,next) => {
+    if(req.isAuthenticated()){
+        return next();
+    }
+    return res.status(401).send("Unauthorized")
+
+}
+
+const myDriveGet = (req,res) => {
+    res.render("myDrive", {user: req.user})
+}
+
 export default {
     logInGet,
     signUpPost,
     signUpGet,
     homePageGet,
-    logOutPost
+    logOutPost,
+    isAuthenticated,
+    myDriveGet
 }
