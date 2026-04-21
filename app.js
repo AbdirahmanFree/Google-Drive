@@ -11,9 +11,6 @@ dotenv.config()
 
 const app = express()
 
-const users = await prisma.user.findMany();
-console.log(users)
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 

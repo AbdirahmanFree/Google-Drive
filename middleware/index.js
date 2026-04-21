@@ -52,7 +52,8 @@ const signUpPost = [
                 const user = await prisma.user.create({
                     data: {
                         username: username,
-                        fullname: fullname
+                        fullname: fullname,
+                        password: hashedPassword
                     }
                 })
                 res.redirect("/")
