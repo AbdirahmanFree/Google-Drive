@@ -11,6 +11,11 @@
         <form method="post" action="/log-out">
             <button type="submit">Log-Out</button>
         </form>
+        <form method="post" action="/file" enctype="multipart/form-data">
+            <input type="file" name="file" id="file" />
+            <button type="button" onclick="document.getElementById('file').value = ''">X</button>
+            <button type="submit">Submit</button>
+        </form>
     <%} else { %>
         <h1> hello everybody</h1>
         <a href="/sign-up">Sign-Up</a>

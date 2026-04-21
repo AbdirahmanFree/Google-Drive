@@ -1,7 +1,8 @@
 import { Router } from 'express';
-
 import indexController from "../middleware/index.js";
 import passport from '../auth/passport.js';
+import multer from 'multer';
+const upload = multer({dest: "./uploads"})
 
 
 const router = Router()
@@ -17,5 +18,7 @@ router.post("/log-in",passport.authenticate('local', {
 }))
 
 router.post("/log-out",indexController.logOutPost)
+
+router.post("/file", upload.single('file'), (req,res,next)=>{})
 
 export default router
