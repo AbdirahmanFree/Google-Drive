@@ -8,9 +8,6 @@
 <body>
     <% if(user){ %>
         <h1>Hello <%=user.fullname.split("_")[0]%> <%=user.fullname.split("_")[1]%> </h1>
-        <form method="post" action="/log-out">
-            <button type="submit">Log-Out</button>
-        </form>
         <form method="post" action="/file" enctype="multipart/form-data">
             <input type="file" name="file" id="file" />
             <button type="button" onclick="document.getElementById('file').value = ''">X</button>

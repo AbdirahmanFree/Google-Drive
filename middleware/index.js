@@ -29,7 +29,12 @@ const validateSignUp = [
 
 
 const homePageGet = (req,res) => {
-    res.render("index", {user: req.user})
+    if(req.isAuthenticated()){
+        res.redirect("/my-drive")
+    }
+    else{
+        res.render("index", {user: req.user})
+    }
 }
 
 const signUpGet = (req,res) => {
@@ -93,7 +98,7 @@ const isAuthenticated = (req,res,next) => {
 }
 
 const myDriveGet = (req,res) => {
-    res.render("myDrive", {user: req.user})
+    res.render("my-drive", {user: req.user})
 }
 
 export default {
