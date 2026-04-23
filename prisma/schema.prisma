@@ -29,4 +29,22 @@ model User {
   password    String
 
   @@map("users")
+  items Item[]
+}
+
+enum ItemType {
+  file
+  folder
+}
+
+model Item {
+   id         String  @id @default(uuid())
+   user       User @relation(fields: [userId], references: [id])
+   userId     String
+   type       ItemType
+   parentId   String?
+   filePath   String?
+
+   parent     Item?  @relation("FolderContents",fields: [parentId], references: [id])
+   children   Item[] @relation("FolderContents")
 }
