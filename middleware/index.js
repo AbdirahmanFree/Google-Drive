@@ -101,6 +101,10 @@ const myDriveGet = (req,res) => {
     res.render("my-drive", {user: req.user})
 }
 
+const addFilePost = (req,res) => {
+    console.log(req.file)
+}
+
 export default {
     logInGet,
     signUpPost,

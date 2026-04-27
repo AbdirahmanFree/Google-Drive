@@ -18,7 +18,7 @@ model Session {
   expiresAt DateTime
 
   @@index([expiresAt])
-  @@map("sessions")
+  @@map("session")
 
 }
 
@@ -28,7 +28,7 @@ model User {
   fullname    String
   password    String
 
-  @@map("users")
+  @@map("user")
   items Item[]
 }
 
@@ -47,4 +47,6 @@ model Item {
 
    parent     Item?  @relation("FolderContents",fields: [parentId], references: [id])
    children   Item[] @relation("FolderContents")
+
+   @@map("item")
 }

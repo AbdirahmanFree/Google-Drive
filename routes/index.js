@@ -22,9 +22,7 @@ router.post("/log-in",passport.authenticate('local', {
 
 router.post("/log-out",indexController.logOutPost)
 
-router.post("/add-file",upload.single('file'),(req,res)=>{
-    console.log(req.file)
-})
+router.post("/add-file",upload.single('file'),indexController.addFilePost)
 
 
 
