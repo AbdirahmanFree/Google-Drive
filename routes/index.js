@@ -20,10 +20,7 @@ router.post("/log-in",passport.authenticate('local', {
     failureRedirect: "/log-in"
 }))
 
+router.post("/add-file", upload.single('file'),indexController.addFilePost)
+
 router.post("/log-out",indexController.logOutPost)
-
-router.post("/add-file",upload.single('file'),indexController.addFilePost)
-
-
-
 export default router

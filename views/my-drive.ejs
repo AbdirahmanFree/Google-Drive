@@ -12,13 +12,38 @@
                 <button type="submit">Log-Out</button>
             </form>
     </div>
-    <div style="display: flex;">
-        <form method="post" action="/add-file" enctype="multipart/form-data">
-            <input type="file" name="file" id="file"/>
-            <button type="button" onclick="document.getElementById('file').value = ''">X</button>
-            <button type="submit">Submit</button>
-        </form>
+    <% if(!folderId){ %>
+        <h1> currently in root folder</h1>
+    <% } %>
+    <div style="display: flex; justify-content: space-between;">
+        <% if(folderId){ %>
+            <form method="post" action="/:folderId/add-file" enctype="multipart/form-data">
+                <input type="file" name="file" id="file"/>
+                <button type="button" onclick="document.getElementById('file').value = ''">X</button>
+                <button type="submit">Add File</button>
+            </form>
+            <form method="post" action="/:folderId/add-folder">
+                <input type="text" name="folder" id="folder" />
+                <button type="submit">Add Folder</button>
+            </form>
+        <% } else { %>
+            <form method="post" action="/add-file" enctype="multipart/form-data">
+                <input type="file" name="file" id="file"/>
+                <button type="button" onclick="document.getElementById('file').value = ''">X</button>
+                <button type="submit">Add File</button>
+            </form>
+            <form method="post" action="/add-folder">
+                <input type="text" name="folder" id="folder" />
+                <button type="submit">Add Folder</button>
+            </form>
+        <% } %>     
+    </div>
+
+
+    
+        
         
     </div>
+    
 </body>
 </html>

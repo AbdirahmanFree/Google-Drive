@@ -97,12 +97,40 @@ const isAuthenticated = (req,res,next) => {
 
 }
 
-const myDriveGet = (req,res) => {
-    res.render("my-drive", {user: req.user})
+const myDriveGet = async (req,res) => {
+    console.log(req.params)
+    const folderId = req.folderId || null
+    const children = await prisma.item.findMany({
+        where: {
+            parentId: folderId
+        }
+    })
+    console.log(children)
+    res.render("my-drive", {user: req.user, folderId: req.params.folderId || null, items: children})
 }
 
-const addFilePost = (req,res) => {
+const addFilePost =  async(req,res) => {
     console.log(req.file)
+    console.log(req.user)
+    const userId = req.user.id;
+    const filePath = req.file.originalname
+    console.log(filePath)
+    try {
+        await prisma.item.create({
+            data: {
+                userId: userId,
+                type: 'file',
+                filePath: filePath
+            }
+        })
+    } catch(error){
+        console.log(error)
+    }
+    res.redirect("my-drive")
+
+}
+
+const addFolderPost = (req,res) => {
 }
 
 export default {
@@ -112,5 +140,7 @@ export default {
     homePageGet,
     logOutPost,
     isAuthenticated,
-    myDriveGet
+    myDriveGet,
+    addFilePost,
+    addFolderPost
 }
