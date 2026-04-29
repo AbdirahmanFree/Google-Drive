@@ -46,6 +46,7 @@ model Item {
    type       ItemType
    parentId   String?
    filePath   String?
+   name       String
 
    parent     Item?  @relation("FolderContents",fields: [parentId], references: [id])
    children   Item[] @relation("FolderContents")

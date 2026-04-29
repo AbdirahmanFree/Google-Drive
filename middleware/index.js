@@ -1,6 +1,7 @@
 import { body, validationResult, matchedData } from "express-validator"
 import { hashPassword } from  "../auth/password.js"
 import prisma from '../db/prisma.js'
+import supabase  from "../db/supabase.js"
 
 
 const validateSignUp = [
@@ -110,23 +111,38 @@ const myDriveGet = async (req,res) => {
 }
 
 const addFilePost =  async(req,res) => {
-    console.log(req.file)
-    console.log(req.user)
     const userId = req.user.id;
-    const filePath = req.file.originalname
-    console.log(filePath)
-    try {
-        await prisma.item.create({
+    const uniqueName = `${Date.now()}-${req.file.originalname}`
+    const filePath = `users/${userId}/${uniqueName}`
+    const file = req.file.buffer
+    const mimetype = req.file.mimetype
+    
+   try {
+        const {data, error} = await supabase.storage
+        .from('files')
+        .upload(filePath,file, {contentType: mimetype})
+
+        if(error){
+            console.error(error)
+            return res.status(500).send('storage upload failed')
+        }
+        else{
+            await prisma.item.create({
             data: {
                 userId: userId,
                 type: 'file',
-                filePath: filePath
+                filePath: filePath,
+                name: req.file.originalname
             }
         })
+        }
+        
     } catch(error){
-        console.log(error)
+        console.error(error)
+        return res.status(500).send('upload failed')
     }
-    res.redirect("my-drive")
+    return res.redirect("my-drive")
+    
 
 }
 
