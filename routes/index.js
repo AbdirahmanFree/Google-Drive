@@ -21,6 +21,7 @@ router.post("/log-in",passport.authenticate('local', {
 }))
 
 router.post("/add-file", upload.single('file'),indexController.addFilePost)
+router.post("/add-folder",indexController.addFolderPost)
 
 router.post("/log-out",indexController.logOutPost)
 export default router

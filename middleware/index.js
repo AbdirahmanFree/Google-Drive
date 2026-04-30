@@ -100,13 +100,14 @@ const isAuthenticated = (req,res,next) => {
 
 const myDriveGet = async (req,res) => {
     console.log(req.params)
-    const folderId = req.folderId || null
+    co
     const children = await prisma.item.findMany({
         where: {
-            parentId: folderId
+            parentId: folderId,
+            userId: req.user.id
         }
     })
-    console.log(children)
+    console.log('children', children)
     res.render("my-drive", {user: req.user, folderId: req.params.folderId || null, items: children})
 }
 
@@ -146,7 +147,22 @@ const addFilePost =  async(req,res) => {
 
 }
 
-const addFolderPost = (req,res) => {
+const addFolderPost = async (req,res) => {
+    const folderName = req.body.folder
+    const userId = req.user.id
+    try {
+        await prisma.item.create({
+            data: {
+                userId: userId,
+                type: 'folder',
+                name: folderName,
+            }
+        })
+
+    } catch(error) {
+        console.error(error)
+        return res.status(500).send('folder creation failed')
+    }
 }
 
 export default {

@@ -36,6 +36,19 @@
                 <input type="text" name="folder" id="folder" />
                 <button type="submit">Add Folder</button>
             </form>
+            <ul>
+                <% items.forEach((item) =>{ %>
+                    <% if(item.type == 'folder'){ %>
+                        <a href="/<%=item.id%>"> <%=item.type%> </a>
+                       
+                    <% }else{ %>
+                        <li><%=item.name%></li>
+                    <% } %>
+                    
+                    
+                <% }) %>
+            </ul>
+            
         <% } %>     
     </div>
 
